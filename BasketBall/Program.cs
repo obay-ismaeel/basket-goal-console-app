@@ -1,23 +1,35 @@
 ﻿using BasketBall;
 
+play:
 Console.Write("Choose a level from 1 to 10 and press enter: ");
 Int32.TryParse(Console.ReadLine(), out int number);
+Level level = new Level(number);
 
-Grid one = new Grid(3,3);
-one.AddBlock(1, 1);
-one.AddBall(2, 1);
-one.AddBasket(0, 0);
+Console.WriteLine(
+    $"\nUse the keyboard [W,A,S,D] to move..." +
+    $"\nPress [P] to show possible moves" +
+    $"\nPress [N] to solve using DFS algorithm" +
+    $"\nPress [B] to solve using BFS algorithm" +
+    $"\nPress [M] to solve using UCS algorithm" +
+    $"\n{level}"
+);
 
-Grid two = new Grid(3, 3);
-two.AddBlock(1, 1);
-two.AddBall(2, 1);
-two.AddBasket(0, 0);
+while (level.BallsCount > 0)
+{
+    var input = char.ToLower(Console.ReadKey(true).KeyChar);
+    level.Control(input);
+    Console.WriteLine("\n");
+    if (input != 'b' && input != 'n' && input != 'm')
+        Console.WriteLine(level);
+}
 
-Grid three = new Grid(3, 3);
-three.AddBlock(0, 0);
-three.AddBall(1, 1);
-three.AddBasket(2, 1);  
+Console.WriteLine("=====================================================");
+Console.WriteLine("\t\tCongrats You WON!");
+Console.WriteLine("=====================================================\n");
 
-Console.WriteLine("one: " + one.GetHashCode());
-Console.WriteLine("two: " + two.GetHashCode());
-Console.WriteLine("three: " + three.GetHashCode());
+Console.Write("Press any key to replay: ");
+
+Console.ReadKey();
+Console.WriteLine("\n");
+
+goto play;
